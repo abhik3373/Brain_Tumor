@@ -94,11 +94,19 @@ streamlit run "streamlit(app).py"
 
 ---
 
-## 📁 Dataset
+## 📁 Dataset & Models Download
 
-The model was trained on brain MRI scan images categorized by tumor type. Dataset stored locally under `MRI Scans/` directory.
+Large files (MRI Scans dataset + trained model files) are not included in this repository due to size constraints.
 
-> Note: Large model files (`.h5`, `.keras`) and MRI scan images are not included in the repository due to size constraints. Contact for access or use your own dataset.
+**👉 [Download Full Project Assets (Google Drive)](https://drive.google.com/file/d/1EZ_2TxGCrGO4bISD1M983vR_wro3XuQs/view?usp=sharing)**
+
+The zip contains:
+- `MRI Scans/` — labeled MRI scan images for training & testing
+- `brain_tumor_model.h5` — trained CNN model
+- `my_model.keras` — saved Keras model
+- `my_model_categorical/` — categorical model directory
+
+After downloading, extract and place the contents in the root of the cloned repository before running any scripts.
 
 ---
 
@@ -108,3 +116,9 @@ The model was trained on brain MRI scan images categorized by tumor type. Datase
 - GitHub: [@abhik3373](https://github.com/abhik3373)
 - LinkedIn: [linkedin.com/in/abhishek-kolpe](https://linkedin.com/in/abhishek-kolpe)
 - Email: abhishekkolpe2004@gmail.com
+
+---
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
