@@ -117,8 +117,4 @@ After downloading, extract and place the contents in the root of the cloned repo
 - LinkedIn: [linkedin.com/in/abhishek-kolpe](https://linkedin.com/in/abhishek-kolpe)
 - Email: abhishekkolpe2004@gmail.com
 
----
 
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
