@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MRI Scan Classifier</title>
+    <script src="my_model_categorical.keras"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>MRI Scan Classifier</h2>
+        <input type="file" id="upload" accept="image/jpeg, image/png" onchange="previewImage()">
+        <img id="image-preview" src="#" alt="Preview Image">
+        <button onclick="classify()">Classify</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        async function loadModel() {
+            const model = await tf.loadLayersModel('https://example.com/model.json');
+            return model;
+        }
+
+        let loadedModel;
+
+        async function classify() {
+            if (!loadedModel) {
+                loadedModel = await loadModel();
+            }
+
+            const file = document.getElementById('upload').files[0];
+            if (!file) {
+                alert('Please select an image.');
+                return;
+            }
+
+            const imageElement = document.getElementById('image-preview');
+            const reader = new FileReader();
+
+            reader.onload = async function (e) {
+                imageElement.src = e.target.result;
+
+                const image = tf.browser.fromPixels(imageElement).resizeNearestNeighbor([224, 224]).toFloat();
+                const input = image.expandDims();
+
+                const predictions = await loadedModel.predict(input).data();
+                const resultElement = document.getElementById('result');
+                resultElement.innerText = `Prediction: ${predictions[0] > 0.5 ? 'Tumor Detected' : 'No Tumor Detected'}`;
+            };
+
+            reader.readAsDataURL(file);
+        }
+    </script>
+</body>
+</html>

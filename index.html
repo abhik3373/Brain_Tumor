@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MRI SCANNER </title>
+    <style>
+        <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css" />
+<script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            <body background="earlydetection.jpg">
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            text-align: center;
+            max-width: 600px;
+            padding: 20px;
+            background-color: #ffffff; /* Background color for the container */
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Adding a slight shadow */
+        }
+        h2 {
+            color: #333333; /* Title color */
+        }
+        #image-preview {
+            max-width: 100%;
+            margin: 20px 0; /* Adding some spacing */
+            border-radius: 5px; /* Adding a border radius to the image */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Adding a slight shadow */
+        }
+        button {
+            background-color: #4CAF50; /* Green button */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049; /* Darker green on hover */
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #333333; /* Result text color */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>MRI Scan Classifier</h2>
+        <input type="file" id="upload" accept=".jpg, .jpeg, .png" onchange="previewImage()">
+        <img id="image-preview" src="#" alt="Preview Image">
+        <button onclick="classify()">Classify</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function previewImage() {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById("image-preview").src = e.target.result;
+            };
+            reader.readAsDataURL(document.getElementById("upload").files[0]);
+        }
+
+        async function classify() {
+            var file = document.getElementById("upload").files[0];
+            if (!file) {
+                alert("Please select an image.");
+                return;
+            }
+
+            var formData = new FormData();
+            formData.append("image", file);
+
+            try {
+                var response = await fetch("/classify", {
+                    method: "POST",
+                    body: formData
+                });
+                var data = await response.json();
+                document.getElementById("result").innerText = "Prediction: " + (data.prediction === 1 ? "Tumor Detected" : "No Tumor Detected");
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        }
+    </script>
+</body>
+</html>
